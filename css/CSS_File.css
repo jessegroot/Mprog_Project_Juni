@@ -1,0 +1,143 @@
+/*
+Made by: Jesse Groot
+Student number: 11012579
+
+Collor scheme for this project:
+dark:       #021C1E
+neutral-d:  #004445
+neurtal-l:  #2C7873
+light:      #6FB98F
+Extra:      #BCBABE -> between light and neurtal
+
+*/
+
+/* overall */
+.container-fluid{
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* Header + Navbar style */
+.nav-link{
+  color: #6FB98F;
+  cursor: pointer;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+.nav-link:hover{
+  color: #2C7873;
+  font-weight: bold;
+}
+.navbar-toggler{
+  background:#004445 !important;
+}
+.navbar-collapse{
+ justify-content: flex-end;
+}
+.highlight{
+  color: #2C7873;
+  font-weight: bold;
+}
+nav{
+  background-color: #BCBABE;
+}
+
+/*  Foto */
+div .carousel_slide{
+  min-height: 500px;
+  background: url('../images/WorldMap.jpg');
+  background-position: center;
+  background-size: 100%;
+  text-align: center;
+  color: #C4DFE6;
+}
+
+/* teskt boxes */
+#title{
+  color: #2C7873;
+  font-size: 24px;
+  font-weight: bold;
+}
+p .lead{
+  color: #6FB98F;
+  font-size: 18px;
+}
+
+
+
+/* footer */
+footer{
+  text-align: center;
+  text-decoration: none;
+}
+
+/* .header{
+  background: #021C1E;
+  padding-top: 25px;
+  min-height: 80px;
+  border-bottom: #004445 4px solid;
+}
+
+.header h1{
+  color: #2C7873;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+.header h2{
+  color: #2C7873;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.header .highlight, header .current a{
+  color: #C4DFE6;
+  font-weight: bold;
+}
+.nav-link{
+  color: #6FB98F;
+  cursor: pointer;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+.nav-link:hover{
+  color: #f97300;
+  font-weight: bold;
+}
+.navbar-toggler{
+  background:#2C7873 !important;
+}
+.navbar-collapse{
+ justify-content: flex-end;
+}
+
+.header a{
+  size: 30px;
+  color: #6FB98F;
+}
+ */
+
+
+
+/* Main space */
+
+
+
+
+/*header style*/
+/* .header{
+ background-image: url('../Images/WorldMap.jpg');
+ background-attachment: fixed;
+ background-size: cover;
+ background-position: center;
+} */
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+
+  padding:0;
+  background-color: #66A5AD;
+}
