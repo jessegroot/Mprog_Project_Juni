@@ -1,0 +1,92 @@
+<!--
+
+Collor scheme for this project:
+dark:       #021C1E
+neutral-d:  #004445
+neurtal-l:  #2C7873
+light:      #6FB98F
+Extra:      #BCBABE -> between light and neurtal
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/CSS_File.css">
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <title>Worldwide Greenhouse Gass Emmision</title>
+  </head>
+  <body>
+    <!-- navbar -->
+
+    <nav class="navbar navbar-expand-md navbar-light sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-Brand">The Real Numbers Of <span class="highlight">Greenhouse Gass Emmision</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"> <a class="nav-link" href="Page_Home.html"><span class="highlight">Home</span></a> </li>
+            <li class="nav-item active"> <a class="nav-link " href="Page_Graph.html">Graphs</a> </li>
+            <li class="nav-item active"> <a class="nav-link " href="Page_Summery.html">Summery</a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="Page_Contact.html">Contact</a> </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Picture -->
+    <div class="container-fluid">
+      <div class="carousel_slide">
+      </div>
+    </div>
+
+    <!-- Information about the project -->
+    <div class="container-fluid">
+      <div class="row jumbotron">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
+          <a id="title">The Problem</a>
+          <p class="lead">Normally all over the world the emmision of greenhouse gasses is defided by the
+          gross domestic product (GPD) of a country. This presumes that rich countries are allowed to have more
+          emmision than poor countries. this is not fair, in this project we will make a visualisation based on
+          variables that exlude wealth and instead show a fair view on greenhouse gass emmision per country.</p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+          <img src="Images/rich-vs-poor.jpg">
+        </div>
+      </div>
+      <div class="row jumbotron">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
+          <a id="title">The Solution</a>
+          <p class="lead">in this visualisation we show the greenhouse gass emmisions per county devided by two factors:
+            population and ratio between im- and export. We believe that every person in this world is allowed to create
+            as much gass emmision as another since people have equal rights. This way a country who has to profide for a
+            larger group should be able to have more greenhouse gass emmisions. However, some countries do make a lot for
+            others and because of this the have more greenhouse gass emmisions since the other countries do not have to
+            make it themselves. We try to correct this by defiding the import/export. This way countries who do their
+            greenhouse gass emmisions in other countries will still be negetively influenced.</p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+          <img src="Images/scale.png">
+        </div>
+      </div>
+    </div>
+
+
+
+    <footer>
+      <ul>
+        <li><p>Made By Jesse Groot</p></li>
+        <li><p>2-12-2018</p></li>
+        <li><p>Copyright &copy</p></li>
+      </ul>
+    </footer>
+  </body>
+</html>

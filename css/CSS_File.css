@@ -46,9 +46,9 @@ nav{
 /*  Foto */
 div .carousel_slide{
   min-height: 500px;
-  background: url('../images/WorldMap.jpg');
+  background: url('../images/EuropeanMap.jpg');
   background-position: center;
-  background-size: 100%;
+  background-size: 50%;
   text-align: center;
   color: #C4DFE6;
 }

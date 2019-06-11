@@ -1,0 +1,88 @@
+<!--
+
+Collor scheme for this project:
+dark:       #021C1E
+neutral-d:  #004445
+neurtal-l:  #2C7873
+light:      #6FB98F
+Extra:      #BCBABE -> between light and neurtal
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="./css/CSS_File.css">
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<!-- Script for layout pages (Bootstrap) -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="./js_py/Landmap.js"></script>
+    <script src="./js_py/Main.js"></script>
+    <title>What is your good country ranking?</title>
+  </head>
+  <body>
+    <!-- navbar -->
+
+    <nav class="navbar navbar-expand-md navbar-light sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-Brand">Your own real <span class="highlight">Good Country Index</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"> <a class="nav-link" href="Page_Home.html">Home</a> </li>
+            <li class="nav-item active"> <a class="nav-link " href="Page_Graph.html"><span class="highlight">Graphs</span></a> </li>
+            <li class="nav-item active"> <a class="nav-link " href="Page_Summery.html">Summery</a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="Page_Contact.html">Contact</a> </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+		<!-- Graph 2 and 3 -->
+		<div class="container-fluid">
+			<div class="row jumbotron">
+				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8" id="Graph_1">
+					<div id="European_map">
+
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+				</div>
+			</div>
+		</div>
+
+    <!-- Graph 1 and list of lands -->
+    <div class="container-fluid">
+      <div class="row jumbotron">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10" id="worldMap">
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2" id="land_list">
+          <ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <ul>
+        <li><p>Made By Jesse Groot</p></li>
+        <li><p>2-12-2018</p></li>
+        <li><p>Copyright &copy</p></li>
+      </ul>
+    </footer>
+  </body>
+</html>
