@@ -22,64 +22,85 @@ Countries --> data per country (JSON style)
 import json
 import csv
 
-INPUT_CSV_CO2 =        "./Data/CO2_capita.csv"            # Long-Format   # Done
-INPUT_CVS_Forest =     "./Data/Deforestation.csv"         # Wide-format   # Cant be done
-INPUT_CVS_Food =       "./Data/Food_production.csv"       # Wide-format   # Cant be done
-INPUT_CSV_Waste =      "./Data/Waste_Capita.csv"          # Wide-format   # Done
-INPUT_CSV_Pop =        "./Data/FOASTAT_populaiton.csv"    # Long-format   # Done
+INPUT_CSV_CO2 =        "./Data/CO2_capita.csv"            # Done
+INPUT_CSV_Forest =     "./Data/Deforestation.csv"         # Done
+INPUT_CSV_Food =       "./Data/Food_production.csv"       # Done
+INPUT_CSV_Waste =      "./Data/Waste_Capita.csv"          #
+INPUT_CSV_Pop =        "./Data/Pop_country3.csv"          # Done
+INPUT_CSV_Code =       "./Data/code.csv"                  # Done
 # INPUT_CSV_CountryCodes =   "./Data/GDP_Of_Countriescsv"
 
 def getJSON():
+
+    countries = []
+
+    # open csv file for Greenhouse Gass Emission
+    with open(INPUT_CSV_Code) as csvfile:
+        reader = csv.reader(csvfile)
+        round = 1
+        for line in reader:
+            if round == 1:
+                round = 2
+            else:
+                if(line[5] == "Europe"):
+                    countries.append([line[0],line[1],line[2]])
+
     # make json object
     json = {}
 
-    # open csv file for Greenhouse Gass Emission
+    # open csv file for CO2 emmision per capita
     with open(INPUT_CSV_CO2) as csvfile:
         reader = csv.reader(csvfile)
         round = 1
-        valid = 0
         for line in reader:
             if round == 1:
                 round = 2
             else:
                 line = line[0].split(",")
                 if (len(str(line[0])) == 3):
-                    if (str(line[0]) not in json):
-                        json[line[0]] = {}
-                    else:
-                        line[5] = line[5].replace('"', "")
-                        json[line[0]]["Value"] = float(line[6])
-                        json[line[0]]["Year"] = float(line[5])
+                    for country in countries:
+                        if (line[0] in country):
+                            if (country[0] not in json):
+                                json[country[0]] = {}
+                            line[5] = line[5].replace('"', "")
+                            json[country[0]]["CO2_capita"] = float(line[6])
 
-    print(json)
-
-    # open csv file for Population
-    with open(INPUT_CSV_Population) as csvfile:
+    # open csv file for Population in millions
+    with open(INPUT_CSV_Pop) as csvfile:
         reader = csv.reader(csvfile)
         round = 1
-        startYear = 0
         for line in reader:
             if round == 1:
-                while round == 1:
-                    if "1995" in line[startYear]: #line[startYear]
-                        round = 2
-                        break;
-                    else:
-                        startYear += 1
+                round = 2
+            else:
+                for country in countries:
+                    if (line[0] in country):
+                        if (str(country[0]) in json):
+                            json[country[0]]["Pop"] = line[4]
+                        else:
+                            json[country[0]] = {}
+                            json[country[0]]["Pop"] = line[4]
+
+
+    # open csv file for Forest use ratio
+    with open(INPUT_CSV_Forest) as csvfile:
+        reader = csv.reader(csvfile)
+        round = 1
+        for line in reader:
+            if round == 1:
+                round = 2
             else:
                 line = line[0].split(",")
-                countryCode = "".join(line[1:3])
-                for key in json.keys():
-                    if key in countryCode:
-                        for year in range(0,20):
-                            # line[year+startYear]
-                            if str(1995+year) in json[key]:
-                                line[year+startYear] = line[year+startYear].replace('"', "")
-                                json[key][str(1995+year)]["Population"] = float(line[year+startYear])
-                        break
+                for country in countries:
+                    if (line[0] in country):
+                        if (str(country[0]) not in json):
+                            json[country[0]] = {}
+                            json[country[0]]["Forest_ratio"] = float(line[6])
+                        else:
+                            json[country[0]]["Forest_ratio"] = float(line[6])
 
     # open csv file for GDP
-    with open(INPUT_CSV_GDP) as csvfile:
+    with open(INPUT_CSV_Food) as csvfile:
         reader = csv.reader(csvfile)
         round = 1
         land = "XXX"
@@ -88,137 +109,106 @@ def getJSON():
             if round == 1:
                 round = 2
             else:
+                line[0] = line[0].replace('"', "")
                 line = line[0].split(",")
-                if land != str(line[0]):
-                    for key in json.keys():
-                        if key == str(line[0]):
-                            land = key
-                            valid = 1
-                            break
-                        valid = 0
-                if valid == 1:
-                    line[5] = line[5].replace('"', "")
-                    if line[5] in json[land]:
-                        json[land][line[5]]["GDP"] = float(line[6])
+                if land != "N/A":
+                    if land != str(line[3]):
+                        food_count = 0
+                        for country in countries:
+                            if (line[3] in country):
+                                if (land != country[0]):
+                                    if (country[0] in json):
+                                        if (line[10] == "1000 Head"):
+                                            json[country[0]]["Animals_capita"] = float(line[11]) * 1000
+                                        else:
+                                            json[country[0]]["Animals_capita"] = float(line[11])
+                                        if (valid == 1):
+                                            json[land]["Animals_capita"] = json[land]["Animals_capita"]/json[land]["Pop"]
+                                        land = country[0]
+                                        valid == 1
+                                else:
+                                    if (line[10] == "1000 Head"):
+                                        json[country[0]]["Animals_capita"] += float(line[11]) * 1000
+                                    else:
+                                        json[country[0]]["Animals_capita"] += float(line[11])
+
+    # open csv file for Waste per capita
+    with open(INPUT_CSV_Waste) as csvfile:
+        reader = csv.reader(csvfile)
+        round = 1
+        for line in reader:
+            if round == 1:
+                round = 2
+            else:
+                line = line[0].split(",")
+                for country in countries:
+                    if (line[0] in country):
+                        if (str(country[0]) in json):
+                            json[country[0]]["Waste_capita"] = float(line[6])
 
     return json
 
 def addCalculations(json):
 
-    delete_years = []
-    delete_lands = []
+    list_waste      = []
+    list_animal    = []
+    list_co2        = []
+    list_forest     = []
+
+    catogories = ["Waste_capita","Animals_capita","CO2_capita","Forest_ratio"]
 
     for lands in json:
-        for year in json[lands]:
-            if ("GGE" in json[lands][year]) and ("Population" in json[lands][year]) and ("GDP" in json[lands][year]):
-                json[lands][year]["GGE_pop_corrected"] = (json[lands][year]["GGE"]/json[lands][year]["Population"])
-                json[lands][year]["GGE_GDP_corrected"] = (json[lands][year]["GGE"]/json[lands][year]["GDP"])
+        for cat in catogories:
+            if (cat in json[lands]):
+                if (cat == "Waste_capita"):
+                    list_waste.append(json[lands][cat])
+                if (cat == "Animals_capita"):
+                    list_animal.append(json[lands][cat])
+                if (cat == "CO2_capita"):
+                    list_co2.append(json[lands][cat])
+                if (cat == "Forest_ratio"):
+                    list_forest.append(json[lands][cat])
             else:
-                delete_years.append([lands, year])
-        if len(json[lands]) <= 14:
-            delete_lands.append(lands)
+                json[lands][cat] = "N/A"
 
-    for item in delete_years:
-        del json[item[0]][item[1]]
-    for item in delete_lands:
-        del json[item]
+    list_waste.sort()
+    list_animal.sort()
+    list_co2.sort()
+    list_forest.sort()
 
-    years = {}
+    print(list_animal)
 
-    for year in range(0,20):
-        years[str(1995+year)] = {}
-        years[str(1995+year)]["mean_GGE_GDP_corrected"] = 0
-        years[str(1995+year)]["mean_GGE_pop_corrected"] = 0
-        years[str(1995+year)]["county_count"] = 0
+    lists = [[list_waste, catogories[0]], [list_animal, catogories[1]], [list_co2, catogories[2]], [list_forest, catogories[3]]]
+
+    json = json
+    valid = 0
+
+    for list in lists:
+        min = float(list[0][0])
+        max = float(list[0][len(list[0])-1])
+        net_max = float(max - min)
+        for land in json:
+            # # Weird ass shit man
+            # if (land == "Austria"):
+            #     if (valid == 0):
+            #         valid = 1
+            #     elif (land == "Austria"):
+            #         break
+            if json[land][list[1]] != "N/A":
+                # print(json[land][cat])
+                value = json[land][list[1]]
+                scale = 1000 / net_max * (json[land][list[1]] - min)
+                json[land][list[1]] = {}
+                json[land][list[1]]["value"] = value
+                json[land][list[1]]["scale"] = scale
+            else:
+                json[land][list[1]] = {}
+                json[land][list[1]]["value"] = "N/A"
+                json[land][list[1]]["scale"] = "N/A"
 
 
-    for lands in json:
-        for year in json[lands]:
-            years[year]["mean_GGE_GDP_corrected"] += json[lands][year]["GGE_GDP_corrected"]
-            years[year]["mean_GGE_pop_corrected"] += json[lands][year]["GGE_pop_corrected"]
-            years[year]["county_count"] += 1
-
-    for year in years:
-        years[year]["mean_GGE_GDP_corrected"] = years[year]["mean_GGE_GDP_corrected"]/years[year]["county_count"]
-        years[year]["mean_GGE_pop_corrected"] = years[year]["mean_GGE_pop_corrected"]/years[year]["county_count"]
-        del years[year]["county_count"]
-
-    for lands in json:
-        for year in json[lands]:
-            json[lands][year]["GGE_pop_corrected"] = json[lands][year]["GGE_pop_corrected"]/years[year]["mean_GGE_pop_corrected"]
-            json[lands][year]["GGE_GDP_corrected"] = json[lands][year]["GGE_GDP_corrected"]/years[year]["mean_GGE_GDP_corrected"]
 
     return json
-
-def writeTsv(json):
-
-    with open('output.tsv', 'wt') as out_file:
-        tsv_writer = csv.writer(out_file, delimiter='\t')
-        tsv_writer.writerow(['Land', 'GGE_pop_corrected', 'GGE_GDP_corrected'])
-        for lands in json:
-            for item in json[lands]:
-                if (item == "2014"):
-                    tsv_writer.writerow([lands, json[lands][item]["GGE_pop_corrected"], json[lands][item]["GGE_GDP_corrected"]])
-
-def writeJsonLineGraph(json):
-
-    line_json = {}
-    line_json["GGE_pop_corrected"] = {}
-    line_json["GGE_GDP_corrected"] = {}
-    line_json["GGE_pop_corrected"]["series"] = {}
-    line_json["GGE_GDP_corrected"]["series"] = {}
-
-    values_pop = []
-    values_GDP = []
-    series_index = 0
-
-    for land in json:
-        for year in range(1995,2015):
-            year = str(year)
-            if year in json[land]:
-                values_pop.append(json[land][year]["GGE_pop_corrected"])
-                values_GDP.append(json[land][year]["GGE_GDP_corrected"])
-            else:
-                values_pop.append(0)
-                values_GDP.append(0)
-        line_json["GGE_pop_corrected"]["series"][series_index] = {}
-        line_json["GGE_pop_corrected"]["series"][series_index]["name"] = land
-        line_json["GGE_pop_corrected"]["series"][series_index]["values"] = values_pop
-        series_index += 1
-        line_json["GGE_GDP_corrected"]["series"][series_index] = {}
-        line_json["GGE_GDP_corrected"]["series"][series_index]["name"] = land
-        line_json["GGE_GDP_corrected"]["series"][series_index]["values"] = values_GDP
-        series_index += 1
-        values_pop = []
-        values_GDP = []
-
-    # print(line_json)
-
-    # # write json
-    # with open('line_data.json', 'w') as outfile:
-    #     json.dump(line_json, outfile)
-
-def writeJsonBarGraph(json):
-
-    bar_json = {}
-    array_pop = []
-    array_GDP = []
-
-    for land in json:
-        bar_json[land+"_pop_corrected"] = []
-        bar_json[land+"_GDP_corrected"] = []
-        for year in json[land]:
-            array_pop.append({})
-            array_GDP.append({})
-
-            # name: year, value: json[land][year]["GGE_pop_corrected"]
-            # name: year, value: json[land][year]["GGE_GDP_corrected"]
-
-    print(bar_json)
-
-    # # write json
-    # with open('line_data.json', 'w') as outfile:
-    #     json.dump(line_json, outfile)
 
 if __name__ == "__main__":
 
@@ -227,32 +217,6 @@ if __name__ == "__main__":
 
     completeJson = addCalculations(jsonStruct)
 
-    writeTsv(completeJson)
-
-    writeJsonLineGraph(completeJson)
-
-    writeJsonBarGraph(completeJson)
-
-
-
     # write json
     with open('data.json', 'w') as outfile:
         json.dump(completeJson, outfile)
-
-
-
-# Past unused
-
-# # open csv file for % of import that is export
-# with open(INPUT_CSV_ImIsEx_Perc) as csvfile:
-#     reader = csv.reader(csvfile)
-#     for item in reader:
-#         string1 = item[0][0:3]
-#         string2 = item[0][39:43]
-#         string3 = item[0][45:50]
-#         if "," in string3:
-#             string3 = string3.replace(",", "")
-#         if string1 != "ï»¿":
-#             if string1 not in json:
-#                 json[string1] = {}
-#             json[string1][string2] = {"Percentage": float(string3)}

@@ -31,4 +31,5 @@ function european_map(){
            console.log(d3.mouse(this))
          });
   });
+
 }
