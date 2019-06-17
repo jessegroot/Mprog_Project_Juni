@@ -1,4 +1,4 @@
-function european_map(){
+function european_map(json){
   //Width and height
   var w = 800;
   var h = 600;
@@ -27,9 +27,14 @@ function european_map(){
          .attr("stroke", "rgba(8, 81, 156, 0.2)")
          .attr("fill", "rgba(8, 81, 156, 0.6)")
          .on("click", function(path){
-           console.log(path.properties.NAME)
+           // draw in radar chart
+           radar_chard_data(json, path.properties.NAME);
            console.log(d3.mouse(this))
          });
   });
 
+
+  function radar_chard_data(json, country) {
+    console.log(country)
+  }
 }

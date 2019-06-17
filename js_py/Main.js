@@ -12,8 +12,10 @@ window.onload = function() {
 function main() {
 
   d3.json("/js_py/data.json").then(function(json) {
-    european_map();
+    european_map(json);
     sliders(json);
+    radar_chard(json, ["Netherlands"]);
+    bar_chard(json);
   });
 
   // // Queue to request both files and wait until all requests are fulfilled
