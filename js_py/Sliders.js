@@ -8,7 +8,7 @@ function sliders(json) {
         .min(0)
         .max(5)
         .step(1)
-        .width(300)
+        .width(150)
         .ticks(5)
         .displayValue(false)
         .on('onchange', function() {
@@ -29,18 +29,26 @@ function sliders(json) {
 
   function transitionCollour(slider1, slider2, slider3, slider4) {
 
-    europeanmap = d3.select("#European_map").selectAll("path")
-    path = d3.select("#European_map").selectAll("d")
+    // get the european map and the individal countries
+    var european_map = d3.select("#European_map").selectAll("path")
+    var path = d3.select("#European_map").selectAll("d")
 
+    // make the posible variables and the sliders that correlate to them in the same order
     var catogories = ["Forest_ratio", "CO2_capita", "Animals_capita", "Waste_capita"]
     var sliders = [slider1, slider2, slider3, slider4]
-    var slider_total = sliders.reduce((a, b) => a + b, 0)
-    console.log(slider_total)
 
+    // calculate the total value of all the sliders together
+    var slider_total = sliders.reduce((a, b) => a + b, 0)
+
+    // variable how manny sliders are off and array with the sliders that are used.
     var slider_off = 0
     var use_cat = []
     var use_slider = []
 
+    // the countries that are colored
+    clickable = []
+
+    // calculate how manny sliders are off and which are used
     for (let i = 0; i < 4; i++){
       if (sliders[i] == 0){
         slider_off += 1
@@ -51,15 +59,18 @@ function sliders(json) {
       }
     }
 
-    europeanmap.transition()
+    //  update european map
+    european_map.transition()
         .duration(10)
       .transition()
         .attr("fill", function(path) {
+          // if there is data for the countries
           if (path.properties.NAME in json){
             factors = []
             variables = 0
+            // for every catogorie check if there is data of the specific country
             for (let i = 0; i < use_cat.length; i++){
-              if (json[path.properties.NAME][catogories[i]]["scale"] == "N/A"){
+              if (json[path.properties.NAME][use_cat[i]]["scale"] == "N/A"){
                 factors.push(0)
               }
               else {
@@ -67,7 +78,10 @@ function sliders(json) {
                 variables += 1
               }
             }
-            if (factors.includes(1) == true) {
+            if (factors.includes(0) == true || factors.length < 1) {
+              return "rgb(169,169,169)"
+            }
+            else {
               collour = 0.2
               ammount = 0.8/slider_total
               for (let i = 0; i < use_cat.length; i++){
@@ -75,25 +89,13 @@ function sliders(json) {
                   collour += ammount/1000*json[path.properties.NAME][use_cat[i]]["scale"]*use_slider[i]
                 }
               }
+              clickable.push(path.properties.NAME)
               return d3.interpolateBlues(collour)
             }
-            else {
-              return "rgb(169,169,169)"
-            }
-            // else {
-            //   for
-            //   val1 = json[path.properties.NAME]["Forest_ratio"]["scale"]/1000*0.25 * slider1
-            //   val2 = json[path.properties.NAME]["CO2_capita"]["scale"]/1000*0.25 * slider2
-            //   val3 = json[path.properties.NAME]["Animals_capita"]["scale"]/1000*0.25 * slider3
-            //   val4 = json[path.properties.NAME]["Waste_capita"]["scale"]/1000*0.25 * slider4
-            //   return d3.interpolateBlues((1 + (val1+val2+val3+val4)*0.8)/def_rate)
-            // }
           }
           return "rgb(169,169,169)"
 
-          // totalslide = slider1 + slider2 + slider3 + slider4
-          // return d3.interpolateBlues((1 + slider1*0.8)/5)
-          // return "rgba("+a +","+ b+","+ c+ ", 1)"
-        });
+        })
+    // return clickable
   }
 }

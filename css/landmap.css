@@ -15,3 +15,7 @@ path:hover{
 .details{
   color:white;
 }
+
+#Radar_div .legend:hover{
+  font-weight: bold;
+}

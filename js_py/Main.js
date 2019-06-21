@@ -12,9 +12,9 @@ window.onload = function() {
 function main() {
 
   d3.json("/js_py/data.json").then(function(json) {
-    european_map(json);
+    cfg = radar_chard(json);
+    european_map(json, cfg);
     sliders(json);
-    radar_chard(json, ["Netherlands"]);
     bar_chard(json);
   });
 

@@ -188,25 +188,19 @@ def addCalculations(json):
         max = float(list[0][len(list[0])-1])
         net_max = float(max - min)
         for land in json:
-            # # Weird ass shit man
-            # if (land == "Austria"):
-            #     if (valid == 0):
-            #         valid = 1
-            #     elif (land == "Austria"):
-            #         break
             if json[land][list[1]] != "N/A":
-                # print(json[land][cat])
                 value = json[land][list[1]]
                 scale = 1000 / net_max * (json[land][list[1]] - min)
                 json[land][list[1]] = {}
                 json[land][list[1]]["value"] = value
                 json[land][list[1]]["scale"] = scale
+                json[land][list[1]]["absolute"] = value/max*1000
             else:
                 json[land][list[1]] = {}
                 json[land][list[1]]["value"] = "N/A"
                 json[land][list[1]]["scale"] = "N/A"
-
-
+                json[land][list[1]]["absolute"] = "N/A"
+            json[land][list[1]]["max"] = max
 
     return json
 
