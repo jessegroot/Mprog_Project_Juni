@@ -47,6 +47,7 @@ function sliders(json) {
 
     // the countries that are colored
     clickable = []
+    var ranking = []
 
     // calculate how manny sliders are off and which are used
     for (let i = 0; i < 4; i++){
@@ -90,12 +91,45 @@ function sliders(json) {
                 }
               }
               clickable.push(path.properties.NAME)
+              ranking.push({name: path.properties.NAME, rank: collour})
               return d3.interpolateBlues(collour)
             }
           }
           return "rgb(169,169,169)"
-
         })
     // return clickable
+
+    function make_ranking(ranking) {
+
+      d3.select("body").select("#Ranking").select("ol").remove()
+
+      function compare( a, b ) {
+      if ( a.rank < b.rank ){
+        return 1;
+      }
+      if ( a.rank > b.rank ){
+        return -1;
+      }
+        return 0;
+      }
+      ranking.sort(compare);
+
+
+      d3.select("body").select("#Ranking").append("ol").selectAll("h7")
+        .data(ranking.splice(0,10))
+        .enter()
+        .append("li")
+        .append("h7")
+        .text(function(d){
+          return d.name
+        })
+    }
+
+    make_ranking(ranking)
+
   }
+}
+
+function make_ranking() {
+
 }

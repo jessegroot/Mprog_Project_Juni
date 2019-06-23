@@ -85,18 +85,18 @@ function european_map(json_data, cfg){
 
       d3.select("#Rader_chard").select("svg").select("g").selectAll("polygon").remove()
       d3.select("#Rader_chard").select("svg").select("g").selectAll("circle").remove()
-      // d3.select("#Rader_chard").selectAll(".legend").remove()
+      d3.select("#Rader_chard").select('svg').selectAll("g").selectAll("#legend").remove()
 
       console.log(country)
 
       // data
-      var d = []
+      var data = []
       var legend_names = []
 
       country.forEach(function(names, i){
         console.log(json)
         console.log(names)
-        d.push([
+        data.push([
         {axis:"Deforestation",    value:json[names]["Forest_ratio"]["absolute"]/1000},
         {axis:"CO2 Emmisionss",   value:json[names]["CO2_capita"]["absolute"]/1000},
         {axis:"Animal production",value:json[names]["Animals_capita"]["absolute"]/1000},
@@ -104,6 +104,8 @@ function european_map(json_data, cfg){
         ])
         legend_names.push(names)
       })
+
+      console.log(data)
 
       var g = d3.select("#Rader_chard").select("svg").select("g")
 
@@ -118,16 +120,22 @@ function european_map(json_data, cfg){
       dataValues = [];
       series = 0;
 
-      d.forEach(function(y, x){
+      data.forEach(function(y, x){
         dataValuesArray = [];
         g.selectAll(".nodes")
         // for data (j) and rotation (i) make cordinates for each rotation
       	.data(y, function(j, i){
-      	  dataValuesArray.push([
-      		cfg.w/2*(1-(parseFloat(Math.max(j.value, 0)))*Math.sin(i*cfg.radians/total)),
-      		cfg.h/2*(1-(parseFloat(Math.max(j.value, 0)))*Math.cos(i*cfg.radians/total))
-      	  ]);
+          if (isNaN(j.value) != true) {
+            dataValuesArray.push([
+        		cfg.w/2*(1-(parseFloat(Math.max(j.value, 0)))*Math.sin(i*cfg.radians/total)),
+        		cfg.h/2*(1-(parseFloat(Math.max(j.value, 0)))*Math.cos(i*cfg.radians/total))
+        	  ]);
+          }
+          else {
+            dataValuesArray.push([150,150])
+          }
       	});
+
         dataValuesArray.push(dataValuesArray[0]);
         dataValues.push(dataValuesArray)
 
@@ -141,10 +149,13 @@ function european_map(json_data, cfg){
     			 .style("stroke", cfg.color(series))
            // make points where in between the lines will be drawn
     			 .attr("points",function(d) {
-    				 var str="";
-    				 for(var pti=0;pti<d.length;pti++){
-    					 str=str+d[pti][0]+","+d[pti][1]+" ";
+    				 var str="150,150 ";
+    				 for(var pti=0;pti<d.length-1;pti++){
+               if (isNaN(data[x][pti].value) != true){
+                 str=str+d[pti][0]+","+d[pti][1]+" ";
+               }
     				 }
+             console.log(data)
     				 return str;
     			  })
     			 .style("fill", function(j, i){return cfg.color(series)})
@@ -242,6 +253,7 @@ function european_map(json_data, cfg){
         .data(LegendOptions)
         .enter()
         .append("text")
+        .attr("id", "legend")
         .attr("x", cfg.w - 42)
         .attr("y", function(d, i){
           console.log("did work")

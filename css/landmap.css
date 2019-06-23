@@ -19,3 +19,8 @@ path:hover{
 #Radar_div .legend:hover{
   font-weight: bold;
 }
+
+#Ranking li {
+  padding: 10px;
+  font-style: oblique;
+}

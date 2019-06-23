@@ -12,10 +12,10 @@ window.onload = function() {
 function main() {
 
   d3.json("/js_py/data.json").then(function(json) {
-    cfg = radar_chard(json);
+    cfg = bar_chard(json);
+    // cfg = radar_chard(json);
     european_map(json, cfg);
     sliders(json);
-    bar_chard(json);
   });
 
   // // Queue to request both files and wait until all requests are fulfilled

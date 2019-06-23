@@ -76,10 +76,10 @@ def getJSON():
                 for country in countries:
                     if (line[0] in country):
                         if (str(country[0]) in json):
-                            json[country[0]]["Pop"] = line[4]
+                            json[country[0]]["Pop"] = float(line[4])
                         else:
                             json[country[0]] = {}
-                            json[country[0]]["Pop"] = line[4]
+                            json[country[0]]["Pop"] = float(line[4])
 
 
     # open csv file for Forest use ratio
@@ -104,33 +104,27 @@ def getJSON():
         reader = csv.reader(csvfile)
         round = 1
         land = "XXX"
-        valid = 0
         for line in reader:
             if round == 1:
                 round = 2
             else:
                 line[0] = line[0].replace('"', "")
                 line = line[0].split(",")
-                if land != "N/A":
-                    if land != str(line[3]):
-                        food_count = 0
-                        for country in countries:
-                            if (line[3] in country):
-                                if (land != country[0]):
-                                    if (country[0] in json):
-                                        if (line[10] == "1000 Head"):
-                                            json[country[0]]["Animals_capita"] = float(line[11]) * 1000
-                                        else:
-                                            json[country[0]]["Animals_capita"] = float(line[11])
-                                        if (valid == 1):
-                                            json[land]["Animals_capita"] = json[land]["Animals_capita"]/json[land]["Pop"]
-                                        land = country[0]
-                                        valid == 1
+                if land != str(line[3]):
+                    food_count = 0
+                    for country in countries:
+                        if (line[3] in country):
+                            if (country[0] in json):
+                                if (line[10] == "1000 Head"):
+                                    json[country[0]]["Animals_capita"] = float(line[11]) * 1000 / (json[country[0]]["Pop"]*1000000)
                                 else:
-                                    if (line[10] == "1000 Head"):
-                                        json[country[0]]["Animals_capita"] += float(line[11]) * 1000
-                                    else:
-                                        json[country[0]]["Animals_capita"] += float(line[11])
+                                    json[country[0]]["Animals_capita"] = float(line[11]) / (json[country[0]]["Pop"]*1000000)
+                                land = country[0]
+                else:
+                    if (line[10] == "1000 Head"):
+                        json[land]["Animals_capita"] += float(line[11]) * 1000 / (json[land]["Pop"]*1000000)
+                    else:
+                        json[land]["Animals_capita"] += float(line[11]) / (json[land]["Pop"]*1000000)
 
     # open csv file for Waste per capita
     with open(INPUT_CSV_Waste) as csvfile:
@@ -175,8 +169,6 @@ def addCalculations(json):
     list_animal.sort()
     list_co2.sort()
     list_forest.sort()
-
-    print(list_animal)
 
     lists = [[list_waste, catogories[0]], [list_animal, catogories[1]], [list_co2, catogories[2]], [list_forest, catogories[3]]]
 
