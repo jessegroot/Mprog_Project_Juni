@@ -17,7 +17,14 @@ function bar_chard(json) {
 
   // Title BarChard
   canvasBarchard.append("text")
+    .attr("id", "titles")
     .attr("transform","translate( " + (width/2+margin.left) + "," + (margin.top - 10) + ")")
+    .style("text-anchor", "middle")
+    .text("CO2 Emmisions in tons per capita");
+
+  canvasBarchard.append("text")
+    .attr("id", "y_axis")
+    .attr("transform","translate( 30 ," + (margin.top + height/2) + ") rotate(-90)")
     .style("text-anchor", "middle")
     .text("CO2 Emmisions in tons per capita");
 
@@ -26,29 +33,19 @@ function bar_chard(json) {
 
   for (let item in json) {
      x_axis_data.push(item)
+     if (json[item]["Forest_ratio"]["value"] != "N/A") {
+       datasets[3].push({name: item, value: json[item]["Forest_ratio"]["value"]})
+     }
      if (json[item]["CO2_capita"]["value"] != "N/A") {
        datasets[0].push({name: item, value: json[item]["CO2_capita"]["value"]})
-     }
-     if (json[item]["Waste_capita"]["value"] != "N/A") {
-       datasets[1].push({name: item, value: json[item]["Waste_capita"]["value"]})
      }
      if (json[item]["Animals_capita"]["value"] != "N/A") {
        datasets[2].push({name: item, value: json[item]["Animals_capita"]["value"]})
      }
-     if (json[item]["Forest_ratio"]["value"] != "N/A") {
-       datasets[3].push({name: item, value: json[item]["Forest_ratio"]["value"]})
+     if (json[item]["Waste_capita"]["value"] != "N/A") {
+       datasets[1].push({name: item, value: json[item]["Waste_capita"]["value"]})
      }
   }
-
-  // function compare( a, b ) {
-  // if ( a.value < b.value ){
-  //   return 1;
-  // }
-  // if ( a.value > b.value ){
-  //   return -1;
-  // }
-  //   return 0;
-  // }
 
   for (let i = 0; i < datasets.length; i++){
     datasets[i].sort((a, b) => b.value - a.value);
@@ -59,8 +56,6 @@ function bar_chard(json) {
 }
 
 function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
-
-  console.log(datasets)
 
   // make a scale for the xAxis
   x = d3.scaleBand()
@@ -90,9 +85,21 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
     .attr("transform", "translate("+ margin.left +", 0)")
 
   var current_dataset;
+  graph_info = {
+    titles: ["CO2 emmisions per Capita","Waste gerneration per Capita","Animals produced per Capita","Intencity of wood use per country"],
+    y_axis: ["In 1000 KG per year","kilo grams per year","Amount of animals per year","Wood use ratio (1 max 0 nothing)"]
+  }
 
   // A function that create / update the plot for a given variable:
-  function update(data) {
+  function update(data, type, graph_info) {
+
+    var title = d3.select("#Bar_chard").select("#titles")
+      .transition()
+      .text(graph_info["titles"][type])
+
+    var y_axis = d3.select("#Bar_chard").select("#y_axis")
+      .transition()
+      .text(graph_info["y_axis"][type])
 
     current_dataset = data
 
@@ -132,24 +139,7 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
       .remove()
   }
 
-  options = ["Alphabetical", "Desending", "At Rank"]
-  // Create a dropdown
   var dropdown = d3.select("#Bar_div").select("#Dropdown")
-
-  dropdown
-		.append("select")
-		.selectAll("option")
-        .data(options)
-        .enter()
-        .append("option")
-        .attr("value", function(d){
-            return d;
-        })
-        .text(function(d){
-            return d;
-        })
-
-  d3.select("#selected-dropdown").text("first");
 
   dropdown.on("change", function(){
     // Find what was selected from the dropdown
@@ -157,18 +147,27 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
 
     if (selected == "Alphabetical") {
       current_dataset.sort((a, b) => a.name.localeCompare(b.name));
+      for (let i = 0; i < datasets.length; i++){
+        datasets[i].sort((a, b) => a.name.localeCompare(b.name));
+      }
     }
     if (selected == "Desending") {
       current_dataset.sort((a, b) => b.value - a.value);
+      for (let i = 0; i < datasets.length; i++){
+        datasets[i].sort((a, b) => b.value - a.value);
+      }
     }
     if (selected == "At Rank") {
       current_dataset.sort((a, b) => a.value - b.value);
+      for (let i = 0; i < datasets.length; i++){
+        datasets[i].sort((a, b) => a.value - b.value);
+      }
     }
 
-    update(current_dataset)
+    update(current_dataset, 0, graph_info)
   })
 
-  update(datasets[2])
+  update(datasets[0], 0, graph_info)
 
   var RadarChart = {
   draw: function(id, d, cfg){
@@ -257,7 +256,7 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
         .style("font-size", "15px")
     })
     .on("click", function(d, i){
-      update(datasets[i])
+      update(datasets[i], i, graph_info)
     })
 
 	//Tooltip
@@ -277,7 +276,7 @@ var colorscale = d3.scaleOrdinal(d3.schemeCategory10);;
 var LegendOptions = ['Netherlands','Spain'];
 
 //Data
-var d = ["Deforestation","CO2 Emmisionss","Animal production","Waste Generation"];
+var d = ["CO2 Emmisionss","Waste Generation","Animal production","Deforestation"];
 
 //Options for the Radar chart, other than default
 var mycfg = {

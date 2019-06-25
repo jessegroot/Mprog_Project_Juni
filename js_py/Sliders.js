@@ -1,20 +1,25 @@
 function sliders(json) {
 
+  // the sliders
   var items = []
 
+  // for the amount of sliders
   for (var i = 1; i < 5; i++) {
 
+    // create slider
     var slider = d3.sliderHorizontal()
         .min(0)
         .max(5)
         .step(1)
         .width(150)
         .ticks(5)
-        .displayValue(false)
+        .displayValue(true)
+        // onchange call function
         .on('onchange', function() {
           transitionCollour(items[0].value(), items[1].value(), items[2].value(), items[3].value())
         });
 
+    // select slider location on page and call slider
     d3.select(`#slider-${i}`)
       .append('svg')
       .attr('width', 500)
@@ -24,6 +29,7 @@ function sliders(json) {
       .attr('transform', 'translate(30,30)')
       .call(slider);
 
+    // push slider in items
     items.push(slider)
   }
 
@@ -103,6 +109,8 @@ function sliders(json) {
 
       d3.select("body").select("#Ranking").select("ol").remove()
 
+      console.log(ranking)
+
       function compare( a, b ) {
       if ( a.rank < b.rank ){
         return 1;
@@ -114,6 +122,7 @@ function sliders(json) {
       }
       ranking.sort(compare);
 
+      console.log(ranking)
 
       d3.select("body").select("#Ranking").append("ol").selectAll("h7")
         .data(ranking.splice(0,10))

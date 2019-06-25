@@ -14,6 +14,4 @@ https://gist.github.com/nbremer/6506614
 sort
 https://observablehq.com/@d3/sortable-bar-chart
 
-
-
  -->

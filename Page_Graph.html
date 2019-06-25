@@ -21,7 +21,7 @@ Extra:      #BCBABE -> between light and neurtal
 
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<!-- Script for layout pages (Bootstrap) -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 
 		<script src="https://d3js.org/d3.v5.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
@@ -30,6 +30,8 @@ Extra:      #BCBABE -> between light and neurtal
     <script type="text/javascript">
       var clickable;
       var ranking;
+      var x;
+      var y;
     </script>
 
     <script src="./js_py/Landmap.js"></script>
@@ -94,8 +96,8 @@ Extra:      #BCBABE -> between light and neurtal
 
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8" id="Bar_div">
             <select id="Dropdown">
-              <option value="Alphabetical">Alphabetical</option>
               <option value="Desending">Desending</option>
+              <option value="Alphabetical">Alphabetical</option>
               <option value="At Rank">At Rank</option>
             </select>
           <div id="Bar_chard">
