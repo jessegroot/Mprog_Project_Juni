@@ -17,12 +17,12 @@ import json
 import csv
 
 # get the files for the data
-INPUT_CSV_CO2 =        "./Data/CO2_capita.csv"
-INPUT_CSV_Forest =     "./Data/Deforestation.csv"
-INPUT_CSV_Food =       "./Data/Food_production.csv"
-INPUT_CSV_Waste =      "./Data/Waste_Capita.csv"
-INPUT_CSV_Pop =        "./Data/Pop_country3.csv"
-INPUT_CSV_Code =       "./Data/code.csv"
+INPUT_CSV_CO2 =        "Data/CO2_capita.csv"
+INPUT_CSV_Forest =     "Data/Deforestation.csv"
+INPUT_CSV_Food =       "Data/Food_production.csv"
+INPUT_CSV_Waste =      "Data/Waste_Capita.csv"
+INPUT_CSV_Pop =        "Data/Pop_country3.csv"
+INPUT_CSV_Code =       "Data/code.csv"
 
 def getJSON():
 

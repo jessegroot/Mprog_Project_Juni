@@ -11,7 +11,7 @@ window.onload = function() {
 
 function main() {
 
-  d3.json("/js_py/data.json").then(function(json) {
+  d3.json("js_py/data.json").then(function(json) {
 
     // remove some small errors from dataset
     Object.defineProperty(json, "Czech Republic",
