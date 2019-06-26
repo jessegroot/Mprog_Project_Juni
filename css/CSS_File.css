@@ -46,7 +46,7 @@ nav{
 /*  Foto */
 div .carousel_slide{
   min-height: 500px;
-  background: url('/Images/EuropeanMap.jpg');
+  background: url('../Images/EuropeanMap.jpg');
   background-position: center;
   background-size: 50%;
   text-align: center;
