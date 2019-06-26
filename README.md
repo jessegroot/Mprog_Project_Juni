@@ -45,6 +45,9 @@ sort from: https://observablehq.com/@d3/sortable-bar-chart
 ### Bar chart
  inspired by: https://www.d3-graph-gallery.com/graph/interactivity_transition.html
 
+### layout
+  inspired by: https://www.youtube.com/watch?v=9cKsq14Kfsw
+
 ## Plugins
 D3, D3 simple slider, jQuery
 =======
