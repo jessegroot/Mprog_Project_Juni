@@ -25,7 +25,7 @@ function european_map(json_data, cfg){
         .attr("height", h);
 
   //Load in GeoJSON data
-  d3.json("./js_py/europe.json").then(function(json) {
+  d3.json("js_py/europe.json").then(function(json) {
     //Bind data and create one path per GeoJSON feature
     svg.selectAll("path")
     // surrounding of every country
