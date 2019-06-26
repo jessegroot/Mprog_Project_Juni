@@ -16,7 +16,7 @@ function sliders(json) {
         .displayValue(true)
         // onchange call function
         .on('onchange', function() {
-          transitionCollour(items[0].value(), items[1].value(), items[2].value(), items[3].value())
+          transitioncolor(items[0].value(), items[1].value(), items[2].value(), items[3].value())
         });
 
     // select slider location on page and call slider
@@ -33,7 +33,7 @@ function sliders(json) {
     items.push(slider)
   }
 
-  function transitionCollour(slider1, slider2, slider3, slider4) {
+  function transitioncolor(slider1, slider2, slider3, slider4) {
 
     // get the european map and the individal countries
     var european_map = d3.select("#European_map").selectAll("path")
@@ -77,6 +77,7 @@ function sliders(json) {
             variables = 0
             // for every catogorie check if there is data of the specific country
             for (let i = 0; i < use_cat.length; i++){
+              // push 0 if there is no data and 1 if there is
               if (json[path.properties.NAME][use_cat[i]]["scale"] == "N/A"){
                 factors.push(0)
               }
@@ -85,45 +86,54 @@ function sliders(json) {
                 variables += 1
               }
             }
+            // if one datapoint is missing or no datapoints are selected color gray
             if (factors.includes(0) == true || factors.length < 1) {
               return "rgb(169,169,169)"
             }
             else {
-              collour = 0.2
+              // color scale works from 0 to 1 min color in graph = 0.2
+              color = 0.2
+              //  0.8 devided with the sum score of the sliders
               ammount = 0.8/slider_total
               for (let i = 0; i < use_cat.length; i++){
-                if (factors[i] == 1) {
-                  collour += ammount/1000*json[path.properties.NAME][use_cat[i]]["scale"]*use_slider[i]
-                }
+                // ammount / scale * the weight of the slider
+                color += ammount/1000*json[path.properties.NAME][use_cat[i]]["scale"]*use_slider[i]
               }
+              // make the colored country clickable
               clickable.push(path.properties.NAME)
-              ranking.push({name: path.properties.NAME, rank: collour})
-              return d3.interpolateBlues(collour)
+              ranking.push({name: path.properties.NAME, rank: color})
+
+              // color country
+              return d3.interpolateBlues(color)
             }
           }
+          // if country not in JSON color it
           return "rgb(169,169,169)"
         })
-    // return clickable
 
     function make_ranking(ranking) {
 
+      // remove the ranking
       d3.select("body").select("#Ranking").select("ol").remove()
 
-      console.log(ranking)
+      // sort the ranking in order
+      ranking.sort((a, b) => b.rank - a.rank);
 
-      function compare( a, b ) {
-      if ( a.rank < b.rank ){
-        return 1;
-      }
-      if ( a.rank > b.rank ){
-        return -1;
-      }
-        return 0;
-      }
-      ranking.sort(compare);
 
-      console.log(ranking)
+      // html_ranking = d3.select("body").select("#Ranking").selectAll("ol")
+      //   .data(ranking.splice(0,10))
+      //
+      // html_ranking
+      //   .enter()
+      //   .append("li")
+      //   .append("h7")
+      //   .merge(html_ranking)
+      //   .transition()
+      //   .text(function(d){
+      //     return d.name
+      //   })
 
+      // append the text to html
       d3.select("body").select("#Ranking").append("ol").selectAll("h7")
         .data(ranking.splice(0,10))
         .enter()
@@ -132,13 +142,10 @@ function sliders(json) {
         .text(function(d){
           return d.name
         })
+
     }
 
     make_ranking(ranking)
 
   }
-}
-
-function make_ranking() {
-
 }

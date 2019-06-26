@@ -14,6 +14,7 @@ function main() {
   d3.json("js_py/data.json").then(function(json) {
 
     // remove some small errors from dataset
+    // change names in JSON to real country name
     Object.defineProperty(json, "Czech Republic",
         Object.getOwnPropertyDescriptor(json, "Czechia"));
     delete json["Czechia"];
@@ -21,9 +22,7 @@ function main() {
         Object.getOwnPropertyDescriptor(json, "United Kingdom of Great Britain and Northern Ireland"));
     delete json["United Kingdom of Great Britain and Northern Ireland"];
 
-    // call the different functions
-    cfg = bar_chard(json);
-    // cfg = radar_chard(json);
+    cfg = bar_radar_chart(json);
     european_map(json, cfg);
     sliders(json);
   });

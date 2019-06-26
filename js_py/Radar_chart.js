@@ -1,38 +1,39 @@
-function bar_chard(json) {
+function bar_radar_chart(json) {
 
   // size of bargraph and margins
-  var canvasBarchardWidth = 900,
-      canvasBarchardHeight = 400,
+  var canvasBarchartWidth = 900,
+      canvasBarchartHeight = 400,
       margin = { top: 30, right: 80, bottom: 80, left: 60 };
 
   // make width and height for graph (exluding space for labels)
-  var width = canvasBarchardWidth - (margin.left + margin.right);
-  var height = canvasBarchardHeight - (margin.bottom + margin.top);
+  var width = canvasBarchartWidth - (margin.left + margin.right);
+  var height = canvasBarchartHeight - (margin.bottom + margin.top);
 
-  // make canvasBarchard in correct place for barchard
-  canvasBarchard = d3.select("#Bar_chard")
+  // make canvas barchart in correct place for barchart
+  canvasBarchart = d3.select("#Bar_chart")
     .append("svg")
-    .attr("width", canvasBarchardWidth)
-    .attr("height", canvasBarchardHeight);
+    .attr("width", canvasBarchartWidth)
+    .attr("height", canvasBarchartHeight);
 
-  // Title BarChard
-  canvasBarchard.append("text")
+  // title bar chart
+  canvasBarchart.append("text")
     .attr("id", "titles")
     .attr("transform","translate( " + (width/2+margin.left) + "," + (margin.top - 10) + ")")
     .style("text-anchor", "middle")
     .text("CO2 Emmisions in tons per capita");
 
-  canvasBarchard.append("text")
+  // y_axis bar chart
+  canvasBarchart.append("text")
     .attr("id", "y_axis")
     .attr("transform","translate( 30 ," + (margin.top + height/2) + ") rotate(-90)")
     .style("text-anchor", "middle")
     .text("CO2 Emmisions in tons per capita");
 
-  x_axis_data = []
+  // get the datasets of each catogorie
   datasets = [[],[],[],[]]
 
+  // for every item in json add to the right catogorie
   for (let item in json) {
-     x_axis_data.push(item)
      if (json[item]["Forest_ratio"]["value"] != "N/A") {
        datasets[3].push({name: item, value: json[item]["Forest_ratio"]["value"]})
      }
@@ -47,44 +48,42 @@ function bar_chard(json) {
      }
   }
 
+  // sort the datasets to desending
   for (let i = 0; i < datasets.length; i++){
     datasets[i].sort((a, b) => b.value - a.value);
   }
 
-  // update_barchard(datasets, canvasBarchard, margin, width, height)
-  return radar_chard(json, datasets, canvasBarchard, margin, width, height)
-}
-
-function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
-
-  // make a scale for the xAxis
+  // make a scale for the x axis
   x = d3.scaleBand()
     .domain(datasets[0].map(d => d.name))
     .range([margin.left, width + margin.left])
     .padding(0.1)
 
-  // make a scale for the yAxis
+  // make a scale for the y axis
   y = d3.scaleLinear()
     .domain([0, d3.max(datasets[0], d => d.value)]).nice()
     .range([height + margin.top, margin.top])
 
-  // make the width that one land takes in barchard
+  // make the width that one land takes in barchart
   var bandWidth = width / datasets[0].length
 
-  // Initialize the X axis
+  // initialize the x axis
   var x = d3.scaleBand()
     .range([ margin.left, width + margin.left ])
     .padding(0.1);
-  var xAxis = canvasBarchard.append("g")
+  var x_axis = canvasBarchart.append("g")
     .attr("transform", "translate(0," + (height + margin.top) + ")")
 
-  // Initialize the Y axis
+  // initialize the y axis
   var y = d3.scaleLinear()
     .range([ height + margin.top, margin.top]);
-  var yAxis = canvasBarchard.append("g")
+  var yAxis = canvasBarchart.append("g")
     .attr("transform", "translate("+ margin.left +", 0)")
 
+  // what is the used dataset
   var current_dataset;
+
+  // titles and y_axis
   graph_info = {
     titles: ["CO2 emmisions per Capita","Waste gerneration per Capita","Animals produced per Capita","Intencity of wood use per country"],
     y_axis: ["In 1000 KG per year","kilo grams per year","Amount of animals per year","Wood use ratio (1 max 0 nothing)"]
@@ -93,19 +92,26 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
   // A function that create / update the plot for a given variable:
   function update(data, type, graph_info) {
 
-    var title = d3.select("#Bar_chard").select("#titles")
+    // update title
+    var title = d3.select("#Bar_chart").select("#titles")
       .transition()
       .text(graph_info["titles"][type])
 
-    var y_axis = d3.select("#Bar_chard").select("#y_axis")
+    // updat y_axis
+    var y_axis = d3.select("#Bar_chart").select("#y_axis")
       .transition()
       .text(graph_info["y_axis"][type])
 
+    // give data to current dataset
     current_dataset = data
 
     // Update the X axis
     x.domain(data.map(function(d) { return d.name; }))
-    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+    x_axis
+      .transition()
+      .duration(1000)
+      .call(d3.axisBottom(x))
+      // rotate text so it is readable
       .selectAll("text")
         .attr("y", 10)
         .attr("x", 10)
@@ -115,17 +121,23 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
 
     // Update the Y axis
     y.domain([0, d3.max(data, function(d) { return d.value }) ]);
-    yAxis.transition().duration(1000).call(d3.axisLeft(y));
+    yAxis
+      .transition()
+      .duration(1000)
+      .call(d3.axisLeft(y));
 
     // Create the u variable
-    var bars = d3.select("#Bar_chard").select("svg").selectAll("rect")
+    var bars = d3.select("#Bar_chart").select("svg").selectAll("rect")
       .data(data)
 
     bars
       .enter()
-      .append("rect") // Add a new rect for each new elements
-      .merge(bars) // get the already existing elements as well
-      .transition() // and apply changes to all of them
+      // Add a new rect for each new elements
+      .append("rect")
+      // get the already existing elements as well
+      .merge(bars)
+      // and apply changes to all of them
+      .transition()
       .duration(1000)
         .attr("x", function(d) { return x(d.name); })
         .attr("y", function(d) { return y(d.value); })
@@ -139,6 +151,7 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
       .remove()
   }
 
+  // select dropdown
   var dropdown = d3.select("#Bar_div").select("#Dropdown")
 
   dropdown.on("change", function(){
@@ -146,18 +159,21 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
  		var selected = d3.select("#Dropdown").node().value
 
     if (selected == "Alphabetical") {
+      // change the datasets in alphabetical order
       current_dataset.sort((a, b) => a.name.localeCompare(b.name));
       for (let i = 0; i < datasets.length; i++){
         datasets[i].sort((a, b) => a.name.localeCompare(b.name));
       }
     }
     if (selected == "Desending") {
+      // change the datasets in desending order
       current_dataset.sort((a, b) => b.value - a.value);
       for (let i = 0; i < datasets.length; i++){
         datasets[i].sort((a, b) => b.value - a.value);
       }
     }
-    if (selected == "At Rank") {
+    if (selected == "Ascending") {
+      // change the datasets in ascending order
       current_dataset.sort((a, b) => a.value - b.value);
       for (let i = 0; i < datasets.length; i++){
         datasets[i].sort((a, b) => a.value - b.value);
@@ -177,7 +193,7 @@ function radar_chard(json, datasets, canvasBarchard, margin, width, height) {
 	var Format = d3.format(".1f");
   var lines = [0,1,2]
 
-	var g = d3.select("#Rader_chard")
+	var g = d3.select("#Rader_chart")
 			.append("svg")
 			.attr("width", cfg.w+cfg.ExtraWidthX)
 			.attr("height", cfg.h+cfg.ExtraWidthY)
@@ -303,7 +319,7 @@ var mycfg = {
   /////////// Initiate legend ////////////////
   ////////////////////////////////////////////
 
-  var svg = d3.select("#Rader_chard")
+  var svg = d3.select("#Rader_chart")
   	.selectAll('svg')
   	.append('svg')
   	.attr("width", w+100)

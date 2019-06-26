@@ -55,9 +55,8 @@ function european_map(json_data, cfg){
               }
             })
           }
-          // call radar_chard
-          radar_chard_data(json_data, countries, cfg);
-          // console.log(d3.mouse(this))
+          // call radar_chart
+          radar_chart_data(json_data, countries, cfg);
         }
       })
       // on mouse over country
@@ -97,17 +96,14 @@ function european_map(json_data, cfg){
     })
   });
 
-  // json country list and cfg (format of radar chard info)
-  function radar_chard_data(json, country, cfg) {
-
-    // delete perfious lines
-    d3.select("#Rader_chard").select('svg').selectAll("g").selectAll("#legend").remove()
+  // json country list and cfg (format of radar chart info)
+  function radar_chart_data(json, country, cfg) {
 
     // data
     var data = []
     var legend_names = []
 
-    // collect data for radar chard
+    // collect data for radar chart
     country.forEach(function(names, i){
       data.push([
       {axis:"CO2 Emmisionss",   value:json[names]["CO2_capita"]["absolute"]/1000},
@@ -119,20 +115,24 @@ function european_map(json_data, cfg){
     })
 
     // select the things the lines are going to be made of
-    var g = d3.select("#Rader_chard").select("svg").select("g")
+    var g = d3.select("#Rader_chart").select("svg").select("g")
 
     // total steps of the lines
     var total = 3;
     // used color cale for radar chart
-    var colorscale = d3.scaleOrdinal(d3.schemeCategory10);;
+    var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
 
-    // legend titles
-    var LegendOptions = legend_names;
+    // initiate Legend
+    var legend = d3.select("#Rader_chart").select('svg').append("g")
+     .attr("class", "legend")
+     .attr("height", 200)
+     .attr("width", 400)
+     .attr('transform', 'translate(50,0)');
 
     // format to show values in script
     var Format = d3.format(".0%");
 
-    // points of the data in chard and which country is selected
+    // points of the data in chart and which country is selected
     var data_values = [];
     var series = 0;
 
@@ -148,7 +148,7 @@ function european_map(json_data, cfg){
       		cfg.h/2*(1-(parseFloat(Math.max(j.value, 0)))*Math.cos(i*cfg.radians/total))
       	  ]);
         }
-        // if data is "NaN" give cordinates of middle of chard
+        // if data is "NaN" give cordinates of middle of chart
         else {
           data_values_array.push([cfg.h/2,cfg.w/2])
         }
@@ -238,8 +238,38 @@ function european_map(json_data, cfg){
         		.attr('r', cfg.radius)
         		.attr("cx", function(j, i){	return data_values[x][i][0];})
         		.attr("cy", function(j, i){ return data_values[x][i][1];})
-      // got to next dataset
-      series++;
+
+      box = g.selectAll("#box"+series)
+        .data(["my man"])
+
+      // create colour squares
+      box
+        .enter()
+        .append("rect")
+        .attr("id", "box"+series)
+        .merge(box)
+        .transition()
+          .attr("x", cfg.w - 115)
+          .attr("y", cfg.h/2 - 30+ series * 20)
+          .attr("width", 10)
+          .attr("height", 10)
+          .style("fill", cfg.color(series));
+
+      legend_text = g.selectAll("#legend"+series)
+        .data(["my man"])
+
+      //Create text next to squares
+      legend_text
+        .enter()
+        .append("text")
+        .attr("id", "legend"+series)
+        .merge(legend_text)
+        .transition()
+          .attr("x", cfg.w - 100)
+          .attr("y", cfg.h/2 - 30 + series * 20 + 10)
+          .attr("font-size", "11px")
+          .attr("fill", "#737373")
+          .text(legend_names[series]);
 
       if (data.length < 2) {
         // If less group in the new dataset, I delete the ones not in use anymore
@@ -247,7 +277,15 @@ function european_map(json_data, cfg){
           .remove()
         g.selectAll(".radar-chart-dots1")
           .remove()
+        g.selectAll("#box1")
+          .remove()
+        g.selectAll("#legend1")
+          .remove()
+
       }
+
+      // got to next dataset
+      series++;
     });
 
     function polygon_collor(type, z) {
@@ -274,35 +312,17 @@ function european_map(json_data, cfg){
   			   .style('font-family', 'sans-serif')
   			   .style('font-size', '13px');
 
-     // initiate Legend
-     var legend = d3.select("#Rader_chard").select('svg').append("g")
-     	.attr("class", "legend")
-     	.attr("height", 200)
-     	.attr("width", 400)
-     	.attr('transform', 'translate(50,0)');
-
-    // create colour squares
-    legend.selectAll('rect')
-      .data(LegendOptions)
-      .enter()
-      .append("rect")
-      .attr("x", cfg.w - 55)
-      .attr("y", function(d, i){ return cfg.h/2 + i * 20;})
-      .attr("width", 10)
-      .attr("height", 10)
-      .style("fill", function(d, i){ return cfg.color(i);});
-
-    //Create text next to squares
-    legend.selectAll('text')
-      .data(LegendOptions)
-      .enter()
-      .append("text")
-      .attr("id", "legend")
-      .attr("x", cfg.w - 42)
-      .attr("y", function(d, i){
-        return cfg.h/2 + i * 20 + 10;})
-      .attr("font-size", "11px")
-      .attr("fill", "#737373")
-      .text(function(d) { return d; });
+    if (data.length == []) {
+      // If less group in the new dataset, I delete the ones not in use anymore
+      g.selectAll(".radar-chart-lines0")
+        .remove()
+      g.selectAll(".radar-chart-dots0")
+        .remove()
+      g.selectAll("#box0")
+        .remove()
+      g.selectAll("#legend0")
+        .remove()
+    }
   }
+
 }
