@@ -3,7 +3,7 @@ function european_map(json_data, cfg){
   var w = 800;
   var h = 600;
 
-  countries = []
+  var countries = []
 
   //Define map projection
   //use a standard projection to flatten the poles, see D3 projection plugin
@@ -64,8 +64,8 @@ function european_map(json_data, cfg){
         // if not in clickable
         if ($.inArray(path.properties.NAME, clickable) == -1) {
           // get mouse cordinates
-          newX =  d3.mouse(this)[0] - 10;
-          newY =  d3.mouse(this)[1] - 5;
+          var newX =  d3.mouse(this)[0] - 10;
+          var newY =  d3.mouse(this)[1] - 5;
 
           // give text to select colored country
           d3.select("#European_map").select("svg").append('text')
@@ -78,8 +78,8 @@ function european_map(json_data, cfg){
         }
         // else give text of colored county
         else {
-          newX =  d3.mouse(this)[0] - 10;
-          newY =  d3.mouse(this)[1] - 5;
+          var newX =  d3.mouse(this)[0] - 10;
+          var newY =  d3.mouse(this)[1] - 5;
 
           d3.select("#European_map").select("svg").append('text')
             .style('opacity', 0.8)
@@ -160,7 +160,7 @@ function european_map(json_data, cfg){
       data_values.push(data_values_array)
 
       // select nodes for data points
-      lines = g.selectAll(".radar-chart-lines"+series)
+      var lines = g.selectAll(".radar-chart-lines"+series)
   		 .data([data_values[x]])
 
       lines
@@ -200,7 +200,7 @@ function european_map(json_data, cfg){
           })
 
       // for circles with values loop 4 times
-      dots = g.selectAll(".radar-chart-dots"+series)
+      var dots = g.selectAll(".radar-chart-dots"+series)
     		.data(y)
 
       dots
@@ -239,7 +239,7 @@ function european_map(json_data, cfg){
         		.attr("cx", function(j, i){	return data_values[x][i][0];})
         		.attr("cy", function(j, i){ return data_values[x][i][1];})
 
-      box = g.selectAll("#box"+series)
+      var box = g.selectAll("#box"+series)
         .data(["my man"])
 
       // create colour squares
@@ -307,10 +307,10 @@ function european_map(json_data, cfg){
     }
 
     // tooltip layout
-  	tooltip = g.append('text')
-  			   .style('opacity', 0)
-  			   .style('font-family', 'sans-serif')
-  			   .style('font-size', '13px');
+  	var tooltip = g.append('text')
+  	   .style('opacity', 0)
+  	   .style('font-family', 'sans-serif')
+  	   .style('font-size', '13px');
 
     if (data.length == []) {
       // If less group in the new dataset, I delete the ones not in use anymore

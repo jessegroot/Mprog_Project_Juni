@@ -54,13 +54,13 @@ function bar_radar_chart(json) {
   }
 
   // make a scale for the x axis
-  x = d3.scaleBand()
+  var x = d3.scaleBand()
     .domain(datasets[0].map(d => d.name))
     .range([margin.left, width + margin.left])
     .padding(0.1)
 
   // make a scale for the y axis
-  y = d3.scaleLinear()
+  var y = d3.scaleLinear()
     .domain([0, d3.max(datasets[0], d => d.value)]).nice()
     .range([height + margin.top, margin.top])
 
@@ -185,14 +185,16 @@ function bar_radar_chart(json) {
 
   update(datasets[0], 0, graph_info)
 
-  var RadarChart = {
+  // function of drowning radar chart
+  var Radar_chart = {
   draw: function(id, d, cfg){
 
 	var total = d.length-1;
 	var radius = Math.min(cfg.w/2, cfg.h/2);
-	var Format = d3.format(".1f");
+	var Format = d3.format(".0%");
   var lines = [0,1,2]
 
+  // append place for radar chart
 	var g = d3.select("#Rader_chart")
 			.append("svg")
 			.attr("width", cfg.w+cfg.ExtraWidthX)
@@ -203,13 +205,14 @@ function bar_radar_chart(json) {
 
 	var tooltip;
 
-	//Circular segments
+	//Circular segments for each %
 	for(var j=0; j<cfg.levels; j++){
 	  var levelFactor = radius*((j+1)/cfg.levels);
 	  g.selectAll(".levels")
 	   .data(lines)
 	   .enter()
 	   .append("svg:line")
+     // begin and end location of line
 	   .attr("x1", function(d, i){return levelFactor*(1-Math.sin(i*cfg.radians/total));})
 	   .attr("y1", function(d, i){return levelFactor*(1-Math.cos(i*cfg.radians/total));})
 	   .attr("x2", function(d, i){return levelFactor*(1-Math.sin((i+1)*cfg.radians/total));})
@@ -225,7 +228,8 @@ function bar_radar_chart(json) {
 	for(var j=0; j<cfg.levels; j++){
 	  var levelFactor = radius*((j+1)/cfg.levels);
 	  g.selectAll(".levels")
-	   .data([1]) //dummy data
+      //dummy data
+	   .data([1])
 	   .enter()
 	   .append("svg:text")
 	   .attr("x", function(d){return levelFactor*(1-Math.sin(0));})
@@ -238,14 +242,14 @@ function bar_radar_chart(json) {
 	   .text(Format((j+1)/cfg.levels));
 	}
 
-	series = 0;
-
+  // make axis for radarchart
 	var axis = g.selectAll(".axis")
 			.data(d)
 			.enter()
 			.append("g")
 			.attr("class", "axis");
 
+  // append lines for the axis
 	axis.append("line")
 		.attr("x1", cfg.w/2)
 		.attr("y1", cfg.h/2)
@@ -255,6 +259,7 @@ function bar_radar_chart(json) {
 		.style("stroke", "grey")
 		.style("stroke-width", "1px");
 
+  // append legende for the axises
 	axis.append("text")
 		.attr("class", "legend")
 		.text(function(d){return d})
@@ -271,6 +276,7 @@ function bar_radar_chart(json) {
         .transition()
         .style("font-size", "15px")
     })
+    // update bar chart on click
     .on("click", function(d, i){
       update(datasets[i], i, graph_info)
     })
@@ -313,11 +319,7 @@ var mycfg = {
 
   //Call function to draw the Radar chart
   //Will expect that data is in %'s
-  RadarChart.draw("#chart", d, mycfg);
-
-  ////////////////////////////////////////////
-  /////////// Initiate legend ////////////////
-  ////////////////////////////////////////////
+  Radar_chart.draw("#chart", d, mycfg);
 
   var svg = d3.select("#Rader_chart")
   	.selectAll('svg')
@@ -334,13 +336,6 @@ var mycfg = {
   	.attr("font-size", "12px")
   	.attr("fill", "#404040")
   	.text("Countries");
-
-  // //Initiate Legend
-  // var legend = svg.append("g")
-  // 	.attr("class", "legend")
-  // 	.attr("height", 200)
-  // 	.attr("width", 400)
-  // 	.attr('transform', 'translate(50,0)');
 
   return mycfg
 }

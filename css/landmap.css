@@ -1,25 +1,21 @@
-.names {
-  fill: none;
-  stroke: #fff;
-  stroke-linejoin: round;
-}
+/*
+
+Made by: Jesse Groot
+Student number: 11012579
+
+*/
 
 /* Makes Countries Hoverable */
 path:hover{
   stroke-width: 4px;
 }
 
-
-/*    text{  pointer-events:none; }   */
-
-.details{
-  color:white;
-}
-
+/* make rader chart labels hoverable */
 #Radar_div .legend:hover{
   font-weight: bold;
 }
 
+/* give the ranking a slightly different look */
 #Ranking li {
   padding: 10px;
   font-style: oblique;

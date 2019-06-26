@@ -73,8 +73,8 @@ function sliders(json) {
         .attr("fill", function(path) {
           // if there is data for the countries
           if (path.properties.NAME in json){
-            factors = []
-            variables = 0
+            var factors = []
+            var variables = 0
             // for every catogorie check if there is data of the specific country
             for (let i = 0; i < use_cat.length; i++){
               // push 0 if there is no data and 1 if there is
@@ -92,9 +92,9 @@ function sliders(json) {
             }
             else {
               // color scale works from 0 to 1 min color in graph = 0.2
-              color = 0.2
+              var color = 0.2
               //  0.8 devided with the sum score of the sliders
-              ammount = 0.8/slider_total
+              var ammount = 0.8/slider_total
               for (let i = 0; i < use_cat.length; i++){
                 // ammount / scale * the weight of the slider
                 color += ammount/1000*json[path.properties.NAME][use_cat[i]]["scale"]*use_slider[i]
@@ -118,20 +118,6 @@ function sliders(json) {
 
       // sort the ranking in order
       ranking.sort((a, b) => b.rank - a.rank);
-
-
-      // html_ranking = d3.select("body").select("#Ranking").selectAll("ol")
-      //   .data(ranking.splice(0,10))
-      //
-      // html_ranking
-      //   .enter()
-      //   .append("li")
-      //   .append("h7")
-      //   .merge(html_ranking)
-      //   .transition()
-      //   .text(function(d){
-      //     return d.name
-      //   })
 
       // append the text to html
       d3.select("body").select("#Ranking").append("ol").selectAll("h7")

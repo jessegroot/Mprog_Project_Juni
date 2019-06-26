@@ -22,7 +22,7 @@ function main() {
         Object.getOwnPropertyDescriptor(json, "United Kingdom of Great Britain and Northern Ireland"));
     delete json["United Kingdom of Great Britain and Northern Ireland"];
 
-    cfg = bar_radar_chart(json);
+    var cfg = bar_radar_chart(json);
     european_map(json, cfg);
     sliders(json);
   });
