@@ -13,11 +13,6 @@ On the first page the problem there is and the solution the site gives is explai
 On the graph page a world map is shown with beneath it a empty radar chart and a filled bar chart. by sliding the sliders the world map will adapt to the countries to your liking. the weight you give to the sliders (0 = not important, 5 = extremely important) gives a top 10 bad countries to the ranking to the right of the sliders.
 By clicking on the countries you can compare them in the radar chart on each individual categories. also you can click on the categories to set the data of all the countries into the bar chart. you can also select there with the dropdown to select them in alphabetical, descending or ascending order.
 
-**World Map**
-
-
-
-
 # Repository structure
 1. css                  -->     all the css code.
 2. Images               -->     all the images.
