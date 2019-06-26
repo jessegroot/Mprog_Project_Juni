@@ -85,7 +85,7 @@ function bar_radar_chart(json) {
 
   // titles and y_axis
   graph_info = {
-    titles: ["CO2 emmisions per Capita","Waste gerneration per Capita","Animals produced per Capita","Intencity of wood use per country"],
+    titles: ["CO2 emmisions per Capita","Waste gerneration per Capita","Animals produced per Capita","Intensity of wood use per country"],
     y_axis: ["In 1000 KG per year","kilo grams per year","Amount of animals per year","Wood use ratio (1 max 0 nothing)"]
   }
 
