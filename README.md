@@ -16,6 +16,8 @@ By clicking on the countries you can compare them in the radar chart on each ind
 **World Map**
 
 
+
+
 # Repository structure
 1. css                  -->     all the css code.
 2. Images               -->     all the images.
@@ -25,9 +27,10 @@ By clicking on the countries you can compare them in the radar chart on each ind
 HTML pages in this file.
 
 # Data sources
- most of the data is taken from https://www.oecd.org/.
- expect from the population this is taken from somewhere else.
- landcodes are taken from: https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv
+CO2, Deforestation and waste generation taken from https://www.oecd.org/.
+expect from the population this is taken from somewhere else.
+animal production from :   http://www.fao.org/faostat/en/#data/TP
+landcodes are taken from:  https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv
 
 
 # Used Codes
@@ -43,7 +46,7 @@ sort from: https://observablehq.com/@d3/sortable-bar-chart
  inspired by: https://www.d3-graph-gallery.com/graph/interactivity_transition.html
 
 ## Plugins
-D3, D3 simple slider, D3 Tooltip, jQuery
+D3, D3 simple slider, jQuery
 =======
 ## Mprog_Project_Juni
 
