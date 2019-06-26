@@ -1,3 +1,3 @@
 # Proposal Project.
 
-![Proposal](doc/proposal.jpeg)
+![Proposal](doc/proposal.jpg)
