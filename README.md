@@ -6,7 +6,7 @@ E-mail:         jesse.ss.groot@gmail.com
 
 # Website:      https://jessegroot.github.io/Mprog_Project_Juni/Page_Home.html
 
-# Video:        
+# Video:        https://www.youtube.com/watch?v=TZitkGBzzA8&feature=youtu.be
 
 # Page Walktrough
 On the first page the problem there is and the solution the site gives is explained. To see the graphs you can click on Graphs on the top right or click on the dropdown when watching on a smaller device.

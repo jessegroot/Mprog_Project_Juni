@@ -294,35 +294,35 @@ function bar_radar_chart(json) {
 			   .style('font-family', 'sans-serif')
 			   .style('font-size', '13px');
   }
-};
+  };
 
-var w = 300,
-	h = 300;
+  var w = 300,
+  	h = 300;
 
-var colorscale = d3.scaleOrdinal(d3.schemeCategory10);;
+  var colorscale = d3.scaleOrdinal(d3.schemeCategory10);;
 
-// legend titles
-var LegendOptions = ['Netherlands','Spain'];
+  // legend titles
+  var LegendOptions = ['Netherlands','Spain'];
 
-// data
-var d = ["CO2 Emmisionss","Waste Generation","Animal production","Deforestation"];
+  // data
+  var d = ["CO2 Emmisionss","Waste Generation","Animal production","Deforestation"];
 
-// options for the Radar chart
-var mycfg = {
-  radius: 4,
-  w: 300,
-  h: 300,
-  factorLegend: 0.85,
-  levels: 10,
-  radians: 1 * Math.PI,
-  opacityArea: 0.4,
-  ToRight: 5,
-  TranslateX: 100,
-  TranslateY: 30,
-  ExtraWidthX: 120,
-  ExtraWidthY: 100,
-  color: d3.scaleOrdinal(d3.schemeCategory10)
-  }
+  // options for the Radar chart
+  var mycfg = {
+    radius: 4,
+    w: 300,
+    h: 300,
+    factorLegend: 0.85,
+    levels: 10,
+    radians: 1 * Math.PI,
+    opacityArea: 0.4,
+    ToRight: 5,
+    TranslateX: 100,
+    TranslateY: 30,
+    ExtraWidthX: 120,
+    ExtraWidthY: 100,
+    color: d3.scaleOrdinal(d3.schemeCategory10)
+    }
 
   // call function to draw the Radar chart
   // will expect that data is in %'s

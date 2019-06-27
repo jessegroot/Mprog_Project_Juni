@@ -60,4 +60,16 @@ this day i worked on the barchard which now got the correct information. this wa
 
 # day 14 (24-06-2019)
 
-Time to fix my bugs :)
+Time to fix my bugs. when changing the bar chart a different category the sortation changed from the order selected in the dropdown so i changed it. I started commenting my code and during this process deleted a lot of un necessary stuff. expressly by the radar chart and land map.
+
+# day 15 (25-06-2019)
+
+Perviously I deleted the radar chart data and made new data. Today I worked on setting it to transition instead. the same for the legend and boxes in the legend. This worked after a while which made me really happy.
+
+# day 16 (26-06-2019)
+
+Still had some commenting to do and I also wanted to sort on your own rank. However this was quite difficult and i didnt make it in time. so i cleaned my HTML commented my last code and handed the project in. I also worked on the style guide and the readme.md.
+
+# day 17 (27-06-2019)
+
+Final report in the making
