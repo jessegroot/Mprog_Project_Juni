@@ -49,3 +49,5 @@ D3, D3 simple slider, jQuery
 ## Mprog_Project_Juni
 
 # https://jessegroot.github.io/Mprog_Project_Juni/Page_Graph.html
+
+Coppyright &coppy Jesse Groot 2019
