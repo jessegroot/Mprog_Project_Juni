@@ -1,3 +1,10 @@
+// Name: Jesse Groot
+// Student number: 11012579
+
+/**
+This code makes the bar chart. It also makes the unchanged background of the radar chart.
+**/
+
 function bar_radar_chart(json) {
 
   // size of bargraph and margins
@@ -205,7 +212,7 @@ function bar_radar_chart(json) {
 
 	var tooltip;
 
-	//Circular segments for each %
+	// circular segments for each %
 	for(var j=0; j<cfg.levels; j++){
 	  var levelFactor = radius*((j+1)/cfg.levels);
 	  g.selectAll(".levels")
@@ -224,11 +231,11 @@ function bar_radar_chart(json) {
 	   .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
 	}
 
-	//Text indicating at what % each level is
+	// text indicating at what % each level is
 	for(var j=0; j<cfg.levels; j++){
 	  var levelFactor = radius*((j+1)/cfg.levels);
 	  g.selectAll(".levels")
-      //dummy data
+      // dummy data
 	   .data([1])
 	   .enter()
 	   .append("svg:text")
@@ -281,7 +288,7 @@ function bar_radar_chart(json) {
       update(datasets[i], i, graph_info)
     })
 
-	//Tooltip
+	// tooltip
 	tooltip = g.append('text')
 			   .style('opacity', 0)
 			   .style('font-family', 'sans-serif')
@@ -294,13 +301,13 @@ var w = 300,
 
 var colorscale = d3.scaleOrdinal(d3.schemeCategory10);;
 
-//Legend titles
+// legend titles
 var LegendOptions = ['Netherlands','Spain'];
 
-//Data
+// data
 var d = ["CO2 Emmisionss","Waste Generation","Animal production","Deforestation"];
 
-//Options for the Radar chart, other than default
+// options for the Radar chart
 var mycfg = {
   radius: 4,
   w: 300,
@@ -317,17 +324,18 @@ var mycfg = {
   color: d3.scaleOrdinal(d3.schemeCategory10)
   }
 
-  //Call function to draw the Radar chart
-  //Will expect that data is in %'s
+  // call function to draw the Radar chart
+  // will expect that data is in %'s
   Radar_chart.draw("#chart", d, mycfg);
 
+  // create radar chart with some extra space for legend
   var svg = d3.select("#Rader_chart")
   	.selectAll('svg')
   	.append('svg')
   	.attr("width", w+100)
   	.attr("height", h)
 
-  //Create the title for the legend
+  // create the title for the legend
   var text = svg.append("text")
   	.attr("class", "title")
   	.attr('transform', 'translate(90,0)')

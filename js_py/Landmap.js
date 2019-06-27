@@ -1,3 +1,10 @@
+// Name: Jesse Groot
+// Student number: 11012579
+
+/**
+This code makes the european map also loads in the radar script data onclick.
+**/
+
 function european_map(json_data, cfg){
   //Width and height
   var w = 800;

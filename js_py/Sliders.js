@@ -1,3 +1,10 @@
+// Name: Jesse Groot
+// Student number: 11012579
+
+/**
+Makes the sliders, ranking and transitions the color of the european map
+**/
+
 function sliders(json) {
 
   // the sliders

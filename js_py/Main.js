@@ -2,7 +2,7 @@
 // Student number: 11012579
 
 /**
-This file loads the data for all graphs in different functions and calls graph 1
+This file loads the data for all graphs in different functions and calls them.
 **/
 
 window.onload = function() {
