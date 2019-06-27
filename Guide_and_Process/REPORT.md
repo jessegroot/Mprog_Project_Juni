@@ -7,7 +7,7 @@ will load the data into the radar chart and there it will be easy to compare. Yo
 click on the axis of the radar chart to watch all the data of this category in the bar
 chart. you can order this ascending, descending or Alphabetical.
 
-![Proposal](doc/proposal.jpg)
+![Layout](doc/website_layout.jpg)
 
 # Technical design
 
@@ -65,4 +65,4 @@ If more time i would have liked to:
 - Sort bar chart on own Ranking
     but this was quite difficult since you can change the ranking at anny time and you had to update this graph by every little change. not all the countries have all the data annyways so you also have to keep this in mind.
 - Make the data in the barchart lighten up from a country when you click on it.
-    this would be more easy and made a huge difference observing data. 
+    this would be more easy and made a huge difference observing data.
