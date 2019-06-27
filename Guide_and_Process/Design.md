@@ -34,7 +34,7 @@ use the JSON for data
 """
 How it works?
 Select a country on world map by clicking on it.
-Instandly make line + bar chard.
-By selecting another courty up to 5 add the country in the linechard and replace the barchard
+Instandly make radar + bar chard.
+By selecting another courty up to 5 add the country in the radar chart and replace the barchard
 Of the selected countries a list is represented by clicking on one of them the lines in the chard are deleted.
 """
