@@ -7,7 +7,7 @@ will load the data into the radar chart and there it will be easy to compare. Yo
 click on the axis of the radar chart to watch all the data of this category in the bar
 chart. you can order this ascending, descending or Alphabetical.
 
-![Layout](doc/website_layout.jpg)
+![Layout](doc/Website_layout.png)
 
 # Technical design
 
